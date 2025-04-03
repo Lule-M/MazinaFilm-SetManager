@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace MazinaFilm_SetManager
 {
-    public partial class Form1 : Form
+    public partial class frmGlavna : Form
     {
-        public Form1()
+        public frmGlavna()
         {
             InitializeComponent();
+        }
+
+        private void frmGlavna_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
