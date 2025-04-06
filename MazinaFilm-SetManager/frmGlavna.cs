@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL___Poslovna_Logika;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,11 +16,7 @@ namespace MazinaFilm_SetManager
         public frmGlavna()
         {
             InitializeComponent();
-        }
-
-        private void frmGlavna_Load(object sender, EventArgs e)
-        {
-
+            dgvZaposleni.DataSource = ZaposleniService.Instance.GetAllZaposleni();
         }
     }
 }
