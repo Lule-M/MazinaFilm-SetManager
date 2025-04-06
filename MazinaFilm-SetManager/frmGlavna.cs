@@ -20,8 +20,6 @@ namespace MazinaFilm_SetManager
 
             lbScene.Font = new Font("Courier", 10, FontStyle.Bold);
 
-            dgvZaposleni.DataSource = ZaposleniService.Instance.GetAllZaposleni();
-
             List<Scena> scene = ScenaService.Instance.GetAllScene();
 
             foreach (Scena s in scene)
@@ -37,8 +35,10 @@ namespace MazinaFilm_SetManager
         {
             txtRedniBroj.Text = lbScene.SelectedItem.ToString().Split('|')[0].Trim();
             txtLokacija.Text = lbScene.SelectedItem.ToString().Split('|')[1].Trim();
-            txtDatum.Text = lbScene.SelectedItem.ToString().Split('|')[2].Trim();
+            dtpDatumSnimanja.Text = lbScene.SelectedItem.ToString().Split('|')[2].Trim();
             cbSnimljeno.Checked = bool.Parse(lbScene.SelectedItem.ToString().Split('|')[3].Trim());
+
+            dgvZaposleni.DataSource = ScenaService.Instance.GetScena(int.Parse(txtRedniBroj.Text)).Zaposleni;
         }
     }
 }

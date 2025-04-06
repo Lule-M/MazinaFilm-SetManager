@@ -41,7 +41,7 @@ namespace DL___Sloj_Podataka
 
             var cmd = sc.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT *  FROM Scena";
+            cmd.CommandText = "SELECT * FROM Scena";
             daScena.SelectCommand = cmd;
             SqlCommandBuilder cb = new SqlCommandBuilder(daScena);
 
@@ -100,6 +100,7 @@ namespace DL___Sloj_Podataka
         {
             DataRow dr = dtScena.NewRow();
 
+            dr["IDScena"] = scena.IdScena;
             dr["RedniBroj"] = scena.RedniBroj;
             dr["DatumSnimanja"] = scena.DatumSnimanja;
             dr["IdLokacija"] = scena.IdLokacija;
@@ -118,8 +119,9 @@ namespace DL___Sloj_Podataka
 
         public bool Update(Scena scena)
         {
-            DataRow dr = dtScena.Select("RedniBroj =" + scena.RedniBroj.ToString())[0];
+            DataRow dr = dtScena.Select("IDScena =" + scena.RedniBroj.ToString())[0];
 
+            dr["IDScena"] = scena.IdScena;
             dr["RedniBroj"] = scena.RedniBroj.ToString();
             dr["DatumSnimanja"] = scena.DatumSnimanja;
             dr["IdLokacija"] = scena.IdLokacija;
@@ -132,7 +134,7 @@ namespace DL___Sloj_Podataka
 
         public bool Delete(int id)
         {
-            dtScena.Select("RedniBroj =" + id.ToString())[0].Delete();
+            dtScena.Select("IDScena =" + id.ToString())[0].Delete();
 
             UpdateDb();
             return true;
@@ -140,15 +142,17 @@ namespace DL___Sloj_Podataka
 
         public Scena GetScena(int id)
         {
-            DataRow dr = dtScena.Select("RedniBroj =" + id.ToString())[0];
+            DataRow dr = dtScena.Select("IDScena =" + id.ToString())[0];
 
             Scena scena = new Scena();
 
+            scena.IdScena = int.Parse(dr["IDScena"].ToString());
             scena.RedniBroj = int.Parse(dr["RedniBroj"].ToString());
             scena.DatumSnimanja = DateTime.Parse(dr["DatumSnimanja"].ToString());
             scena.IdLokacija = int.Parse(dr["IdLokacija"].ToString());
             scena.DobaDana = dr["DobaDana"].ToString();
             scena.Snimljeno = bool.Parse(dr["Snimljeno"].ToString());
+            scena.Zaposleni = GetZaposleniNaSceni(scena.RedniBroj);
 
             return scena;
         }
@@ -160,14 +164,112 @@ namespace DL___Sloj_Podataka
             foreach (DataRow dr in dtScena.Rows)
             {
                 Scena scena = new Scena();
-                scena.RedniBroj = int.Parse(dr["RedniBroj"].ToString());
-                scena.DatumSnimanja = DateTime.Parse(dr["DatumSnimanja"].ToString());
-                scena.IdLokacija = int.Parse(dr["IdLokacija"].ToString());
-                scena.DobaDana = dr["DobaDana"].ToString();
-                scena.Snimljeno = bool.Parse(dr["Snimljeno"].ToString());
+
+                scena = GetScena(int.Parse(dr["IDScena"].ToString()));
+
                 scenaList.Add(scena);
+
             }
             return scenaList;
         }
+
+        private  List<Zaposleni> GetZaposleniNaSceni(int idScena)
+        {
+            List<Zaposleni> zaposleniList = new List<Zaposleni>();
+
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = sc;
+                cmd.CommandText = @"
+                                    SELECT z.* 
+                                    FROM Zaposleni z
+                                    INNER JOIN ScenaZaposleni sz ON z.IDZaposleni = sz.IDZaposleni
+                                    WHERE sz.IDScena = @IDScena";
+
+                cmd.Parameters.AddWithValue("@IDScena", idScena);
+
+                sc.Open();
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        zaposleniList.Add(new Zaposleni()
+                        {
+                            IDZaposleni = (int)dr["IDZaposleni"],
+                            Ime = dr["Ime"].ToString(),
+                            Prezime = dr["Prezime"].ToString(),
+                            RadnoMesto = dr["RadnoMesto"].ToString()
+                        });
+                    }
+                }
+                sc.Close();
+            }
+
+            return zaposleniList;
+        }
+
+        public bool DodajZaposlenogNaScenu(int idScena, int idZaposleni)
+        {
+            try
+            {
+                using (SqlTransaction tran = sc.BeginTransaction())
+                {
+                    SqlCommand cmd = new SqlCommand("INSERT INTO ScenaZaposleni (IDScena, IDZaposleni) VALUES (@IDScena, @IDZaposleni)", sc);
+                    cmd.Transaction = tran;
+                    cmd.Parameters.AddWithValue("@IDScena", idScena);
+                    cmd.Parameters.AddWithValue("@IDZaposleni", idZaposleni);
+
+                    sc.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected == 0)
+                    {
+                        tran.Rollback();
+                        return false;
+                    }
+
+                    tran.Commit();
+                    return true;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Greška pri dodavanju zaposlenog na scenu: " + ex.Message);
+            }
+        }
+
+        public bool UkloniZaposlenogSaScene(int scenaId, int zaposleniId)
+        {
+            try
+            {
+                using(SqlTransaction tran = sc.BeginTransaction())
+                {
+                    SqlCommand cmd = new SqlCommand("DELETE FROM ScenaZaposleni WHERE ScenaId = @ScenaId AND ZaposleniId = @ZaposleniId", sc);
+                    cmd.Transaction = tran;
+                    cmd.Parameters.AddWithValue("@ScenaId", scenaId);
+                    cmd.Parameters.AddWithValue("@ZaposleniId", zaposleniId);
+
+                    sc.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected == 0)
+                    {
+                        tran.Rollback();
+                        return false;
+                    }
+
+                    tran.Commit();
+                    return true;
+                }
+               
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Greška pri uklanjanju zaposlenog sa scene: " + ex.Message);
+            }
+        }
+
+
     }
 }

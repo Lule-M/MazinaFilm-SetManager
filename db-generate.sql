@@ -49,7 +49,7 @@ CREATE TABLE Scena
 (
 	IDScena int IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	RedniBroj int NOT NULL,
-	DatumSnimanja datetime DEFAULT CURRENT_TIMESTAMP,
+	DatumSnimanja date DEFAULT CURRENT_TIMESTAMP,
 	IDLokacija int NOT NULL,
 	DobaDana nvarchar(10) NOT NULL,
 	Snimljeno bit DEFAULT 0 NOT NULL,
@@ -136,12 +136,27 @@ INSERT INTO Zaposleni (Ime, Prezime, RadnoMesto) VALUES
 (N'Igor', N'Ristić', N'Asistent produkcije'), (N'Jovana', N'Petrić', N'Koordinator lokacije');
 GO
 
-INSERT INTO Scena (RedniBroj, IDLokacija, DobaDana, Snimljeno) VALUES
-(1, 1, N'Jutro', 1), (2, 3, N'Dan', 1), (3, 5, N'Noć', 0), (4, 2, N'Dan', 1),
-(5, 8, N'Veče', 0), (6, 4, N'Jutro', 1), (7, 6, N'Noć', 0), (8, 9, N'Dan', 1),
-(9, 7, N'Jutro', 0), (10, 10, N'Noć', 1), (11, 11, N'Dan', 1), (12, 12, N'Veče', 0),
-(13, 13, N'Dan', 1), (14, 14, N'Noć', 0), (15, 15, N'Jutro', 1), (16, 16, N'Dan', 0),
-(17, 17, N'Veče', 1), (18, 18, N'Noć', 1), (19, 19, N'Dan', 1), (20, 20, N'Jutro', 0);
+INSERT INTO Scena (RedniBroj, DatumSnimanja, IDLokacija, DobaDana, Snimljeno) VALUES
+(1, DATEADD(MONTH, -3, GETDATE()), 1, N'Jutro', 1),
+(2, DATEADD(MONTH, -2, GETDATE()), 3, N'Dan', 1),
+(3, DATEADD(MONTH, -1, GETDATE()), 5, N'Noć', 0),
+(4, DATEADD(DAY, -15, GETDATE()), 2, N'Dan', 1),
+(5, DATEADD(DAY, -7, GETDATE()), 8, N'Veče', 0),
+(6, GETDATE(), 4, N'Jutro', 1),
+(7, DATEADD(DAY, 7, GETDATE()), 6, N'Noć', 0),
+(8, DATEADD(DAY, 15, GETDATE()), 9, N'Dan', 1),
+(9, DATEADD(MONTH, 1, GETDATE()), 7, N'Jutro', 0),
+(10, DATEADD(MONTH, 2, GETDATE()), 10, N'Noć', 1),
+(11, DATEADD(MONTH, 3, GETDATE()), 11, N'Dan', 1),
+(12, DATEADD(DAY, -45, GETDATE()), 12, N'Veče', 0),
+(13, DATEADD(DAY, -30, GETDATE()), 13, N'Dan', 1),
+(14, DATEADD(DAY, -10, GETDATE()), 14, N'Noć', 0),
+(15, DATEADD(DAY, 10, GETDATE()), 15, N'Jutro', 1),
+(16, DATEADD(DAY, 30, GETDATE()), 16, N'Dan', 0),
+(17, DATEADD(DAY, 45, GETDATE()), 17, N'Veče', 1),
+(18, DATEADD(MONTH, -2, DATEADD(DAY, -5, GETDATE())), 18, N'Noć', 1),
+(19, DATEADD(MONTH, 1, DATEADD(DAY, 5, GETDATE())), 19, N'Dan', 1),
+(20, DATEADD(MONTH, 3, DATEADD(DAY, -2, GETDATE())), 20, N'Jutro', 0);
 GO
 
 INSERT INTO ZaposleniOprema (IDZaposleni, IDOprema) VALUES
