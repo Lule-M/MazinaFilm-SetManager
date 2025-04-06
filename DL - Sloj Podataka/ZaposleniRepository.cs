@@ -159,7 +159,7 @@ namespace DL___Sloj_Podataka
                 zaposleni.IDZaposleni = int.Parse(dr["IDZaposleni"].ToString());
                 zaposleni.Ime = dr["Ime"].ToString();
                 zaposleni.Prezime = dr["Prezime"].ToString();
-                zaposleni.RadnoMesto = dr["RandoMesto"].ToString();
+                zaposleni.RadnoMesto = dr["RadnoMesto"].ToString();
                 zaposleniList.Add(zaposleni);
             }
 

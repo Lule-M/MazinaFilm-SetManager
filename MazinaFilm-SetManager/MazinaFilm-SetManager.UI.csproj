@@ -79,5 +79,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BL - Poslovna Logika\MazinaFilm-SetManager.BLL.csproj">
+      <Project>{80f0796d-340e-445f-92c6-37a11e11adb8}</Project>
+      <Name>MazinaFilm-SetManager.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{bb77ec9e-bb45-4b7c-9286-9e909f8c843a}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

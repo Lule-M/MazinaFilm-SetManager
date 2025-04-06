@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazinaFilm-SetManager", "MazinaFilm-SetManager\MazinaFilm-SetManager.csproj", "{6AE29FC6-1E49-44AF-9C14-A31C32A2AD76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazinaFilm-SetManager.UI", "MazinaFilm-SetManager\MazinaFilm-SetManager.UI.csproj", "{6AE29FC6-1E49-44AF-9C14-A31C32A2AD76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazinaFilm-SetManager.BLL", "BL - Poslovna Logika\MazinaFilm-SetManager.BLL.csproj", "{80F0796D-340E-445F-92C6-37A11E11ADB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazinaFilm-SetManager.DAL", "DL - Sloj Podataka\MazinaFilm-SetManager.DAL.csproj", "{0BA14513-1776-4C39-81AE-6271C70767B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{BB77EC9E-BB45-4B7C-9286-9E909F8C843A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{6AE29FC6-1E49-44AF-9C14-A31C32A2AD76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AE29FC6-1E49-44AF-9C14-A31C32A2AD76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AE29FC6-1E49-44AF-9C14-A31C32A2AD76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80F0796D-340E-445F-92C6-37A11E11ADB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80F0796D-340E-445F-92C6-37A11E11ADB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80F0796D-340E-445F-92C6-37A11E11ADB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80F0796D-340E-445F-92C6-37A11E11ADB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA14513-1776-4C39-81AE-6271C70767B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA14513-1776-4C39-81AE-6271C70767B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA14513-1776-4C39-81AE-6271C70767B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA14513-1776-4C39-81AE-6271C70767B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB77EC9E-BB45-4B7C-9286-9E909F8C843A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB77EC9E-BB45-4B7C-9286-9E909F8C843A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB77EC9E-BB45-4B7C-9286-9E909F8C843A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB77EC9E-BB45-4B7C-9286-9E909F8C843A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

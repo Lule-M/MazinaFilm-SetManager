@@ -36,6 +36,15 @@
             this.btnNoviZaposleni = new System.Windows.Forms.Button();
             this.btnIzmeniZaposlenog = new System.Windows.Forms.Button();
             this.btnObrisiZaposlenog = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtRedniBroj = new System.Windows.Forms.TextBox();
+            this.txtLokacija = new System.Windows.Forms.TextBox();
+            this.txtDatum = new System.Windows.Forms.TextBox();
+            this.cbSnimljeno = new System.Windows.Forms.CheckBox();
+            this.gbDetaljiScene.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZaposleni)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,8 +53,9 @@
             this.lbScene.FormattingEnabled = true;
             this.lbScene.Location = new System.Drawing.Point(13, 28);
             this.lbScene.Name = "lbScene";
-            this.lbScene.Size = new System.Drawing.Size(376, 199);
+            this.lbScene.Size = new System.Drawing.Size(256, 199);
             this.lbScene.TabIndex = 0;
+            this.lbScene.SelectedIndexChanged += new System.EventHandler(this.lbScene_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -58,9 +68,17 @@
             // 
             // gbDetaljiScene
             // 
-            this.gbDetaljiScene.Location = new System.Drawing.Point(395, 28);
+            this.gbDetaljiScene.Controls.Add(this.cbSnimljeno);
+            this.gbDetaljiScene.Controls.Add(this.txtDatum);
+            this.gbDetaljiScene.Controls.Add(this.txtLokacija);
+            this.gbDetaljiScene.Controls.Add(this.txtRedniBroj);
+            this.gbDetaljiScene.Controls.Add(this.label6);
+            this.gbDetaljiScene.Controls.Add(this.label5);
+            this.gbDetaljiScene.Controls.Add(this.label4);
+            this.gbDetaljiScene.Controls.Add(this.label3);
+            this.gbDetaljiScene.Location = new System.Drawing.Point(275, 23);
             this.gbDetaljiScene.Name = "gbDetaljiScene";
-            this.gbDetaljiScene.Size = new System.Drawing.Size(370, 199);
+            this.gbDetaljiScene.Size = new System.Drawing.Size(215, 205);
             this.gbDetaljiScene.TabIndex = 2;
             this.gbDetaljiScene.TabStop = false;
             this.gbDetaljiScene.Text = "Detalji scene";
@@ -70,7 +88,7 @@
             this.dgvZaposleni.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvZaposleni.Location = new System.Drawing.Point(15, 258);
             this.dgvZaposleni.Name = "dgvZaposleni";
-            this.dgvZaposleni.Size = new System.Drawing.Size(750, 231);
+            this.dgvZaposleni.Size = new System.Drawing.Size(475, 231);
             this.dgvZaposleni.TabIndex = 3;
             // 
             // label2
@@ -102,18 +120,84 @@
             // 
             // btnObrisiZaposlenog
             // 
-            this.btnObrisiZaposlenog.Location = new System.Drawing.Point(690, 495);
+            this.btnObrisiZaposlenog.Location = new System.Drawing.Point(415, 495);
             this.btnObrisiZaposlenog.Name = "btnObrisiZaposlenog";
             this.btnObrisiZaposlenog.Size = new System.Drawing.Size(75, 23);
             this.btnObrisiZaposlenog.TabIndex = 7;
             this.btnObrisiZaposlenog.Text = "Obrisi";
             this.btnObrisiZaposlenog.UseVisualStyleBackColor = true;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(30, 63);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Redni broj";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(38, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Lokacija";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(47, 115);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Datum";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(33, 138);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(52, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Snimljeno";
+            // 
+            // txtRedniBroj
+            // 
+            this.txtRedniBroj.Location = new System.Drawing.Point(91, 60);
+            this.txtRedniBroj.Name = "txtRedniBroj";
+            this.txtRedniBroj.Size = new System.Drawing.Size(100, 20);
+            this.txtRedniBroj.TabIndex = 12;
+            // 
+            // txtLokacija
+            // 
+            this.txtLokacija.Location = new System.Drawing.Point(91, 86);
+            this.txtLokacija.Name = "txtLokacija";
+            this.txtLokacija.Size = new System.Drawing.Size(100, 20);
+            this.txtLokacija.TabIndex = 13;
+            // 
+            // txtDatum
+            // 
+            this.txtDatum.Location = new System.Drawing.Point(91, 112);
+            this.txtDatum.Name = "txtDatum";
+            this.txtDatum.Size = new System.Drawing.Size(100, 20);
+            this.txtDatum.TabIndex = 14;
+            // 
+            // cbSnimljeno
+            // 
+            this.cbSnimljeno.AutoSize = true;
+            this.cbSnimljeno.Location = new System.Drawing.Point(91, 138);
+            this.cbSnimljeno.Name = "cbSnimljeno";
+            this.cbSnimljeno.Size = new System.Drawing.Size(15, 14);
+            this.cbSnimljeno.TabIndex = 15;
+            this.cbSnimljeno.UseVisualStyleBackColor = true;
+            // 
             // frmGlavna
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(777, 533);
+            this.ClientSize = new System.Drawing.Size(507, 533);
             this.Controls.Add(this.btnObrisiZaposlenog);
             this.Controls.Add(this.btnIzmeniZaposlenog);
             this.Controls.Add(this.btnNoviZaposleni);
@@ -125,6 +209,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmGlavna";
             this.Text = "frmGlavna";
+            this.gbDetaljiScene.ResumeLayout(false);
+            this.gbDetaljiScene.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZaposleni)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -141,5 +227,13 @@
         private System.Windows.Forms.Button btnNoviZaposleni;
         private System.Windows.Forms.Button btnIzmeniZaposlenog;
         private System.Windows.Forms.Button btnObrisiZaposlenog;
+        private System.Windows.Forms.CheckBox cbSnimljeno;
+        private System.Windows.Forms.TextBox txtDatum;
+        private System.Windows.Forms.TextBox txtLokacija;
+        private System.Windows.Forms.TextBox txtRedniBroj;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
     }
 }
