@@ -21,6 +21,9 @@ namespace Shared
         public int IdLokacija { get; set; }
         public string DobaDana { get; set; }
         public bool Snimljeno { get; set; }
+        
+        // izvedeni podaci
         public List<Zaposleni> Zaposleni { get; set; } = new List<Zaposleni>();
+        public string Lokacija { get; set; } = string.Empty;
     }
 }

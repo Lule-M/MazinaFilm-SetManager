@@ -73,7 +73,7 @@ namespace DL___Sloj_Podataka
                     
                     int rowsAffected = cmd.ExecuteNonQuery();
 
-                    if(rowsAffected == 0)
+                    if (rowsAffected == 0)
                     {
                         tran.Rollback();
                         return false;
@@ -168,6 +168,27 @@ namespace DL___Sloj_Podataka
                 scena = GetScena(int.Parse(dr["IDScena"].ToString()));
 
                 scenaList.Add(scena);
+
+            }
+            return scenaList;
+        }
+
+        public List<Scena> GetAllScena(int id)
+        {
+            List<Scena> scenaList = new List<Scena>();
+
+            foreach (DataRow dr in dtScena.Rows)
+            {
+                Scena scena = new Scena();
+
+                scena = GetScena(int.Parse(dr["IDScena"].ToString()));
+
+                if (scena.IdScena == id)
+                {
+                    scena.Zaposleni = GetZaposleniNaSceni(scena.IdScena);
+                    scenaList.Add(scena);
+                }
+
 
             }
             return scenaList;

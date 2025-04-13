@@ -29,6 +29,10 @@ namespace MazinaFilm_SetManager
             }
 
             lbScene.SelectedIndex = 0;
+
+            cbLokacija.DataSource = LokacijaService.Instance.GetAllLokacije();
+            cbLokacija.ValueMember = "IdLokacija";
+            cbLokacija.DisplayMember = "Naziv";
         }
 
         private void lbScene_SelectedIndexChanged(object sender, EventArgs e)
@@ -36,9 +40,16 @@ namespace MazinaFilm_SetManager
             txtRedniBroj.Text = lbScene.SelectedItem.ToString().Split('|')[0].Trim();
             txtLokacija.Text = lbScene.SelectedItem.ToString().Split('|')[1].Trim();
             dtpDatumSnimanja.Text = lbScene.SelectedItem.ToString().Split('|')[2].Trim();
-            cbSnimljeno.Checked = bool.Parse(lbScene.SelectedItem.ToString().Split('|')[3].Trim());
+            chkSnimljeno.Checked = bool.Parse(lbScene.SelectedItem.ToString().Split('|')[3].Trim());
+
+            cbLokacija.SelectedIndex = cbLokacija.FindStringExact(txtLokacija.Text);
 
             dgvZaposleni.DataSource = ScenaService.Instance.GetScena(int.Parse(txtRedniBroj.Text)).Zaposleni;
+        }
+
+        private void cbLokacija_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
