@@ -217,6 +217,75 @@ INSERT INTO ScenaZaposleni (IDScena, IDZaposleni) VALUES
 (45, 5), (45, 7), (45, 9), (45, 11), (46, 6), (46, 8), (46, 10), (46, 12),
 (47, 10), (47, 12), (47, 14), (47, 16), (48, 11), (48, 13), (48, 15), (48, 17),
 (49, 15), (49, 17), (49, 19), (49, 1), (50, 16), (50, 18), (50, 20), (50, 2);
+GO
+
+-- STORED PROCEDURE ZA UNOS
+
+CREATE PROCEDURE InsertZaposleniBasic
+    @Ime nvarchar(20),
+    @Prezime nvarchar(20),
+    @RadnoMesto nvarchar(50),
+    @IDZaposleni int OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        INSERT INTO Zaposleni (Ime, Prezime, RadnoMesto)
+        VALUES (@Ime, @Prezime, @RadnoMesto);
+        
+        SET @IDZaposleni = SCOPE_IDENTITY();
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+            
+        THROW;
+    END CATCH
+END;
+GO
+
+CREATE PROCEDURE InsertZaposleniSaScenom
+    @Ime nvarchar(20),
+    @Prezime nvarchar(20),
+    @RadnoMesto nvarchar(50),
+    @IDScena int,
+    @IDZaposleni int OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        INSERT INTO Zaposleni (Ime, Prezime, RadnoMesto)
+        VALUES (@Ime, @Prezime, @RadnoMesto);
+        
+        SET @IDZaposleni = SCOPE_IDENTITY();
+        
+        IF @IDScena IS NOT NULL
+        BEGIN
+            IF NOT EXISTS (SELECT 1 FROM Scena WHERE IDScena = @IDScena)
+                THROW 50001, 'Scena sa navedenim ID ne postoji.', 1;
+                
+            INSERT INTO ScenaZaposleni (IDScena, IDZaposleni)
+            VALUES (@IDScena, @IDZaposleni);
+        END
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+            
+        THROW;
+    END CATCH
+END;
+GO
 
 -- UPITI
 
