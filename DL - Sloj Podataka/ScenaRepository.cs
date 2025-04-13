@@ -30,8 +30,8 @@ namespace DL___Sloj_Podataka
 
         private ScenaRepository()
         {
-            var nw = ConfigurationManager.ConnectionStrings["MazinaFilm"];
-            sc.ConnectionString = nw.ConnectionString;
+            var mf = ConfigurationManager.ConnectionStrings["MazinaFilm"];
+            sc.ConnectionString = mf.ConnectionString;
             LoadScena();
         }
 
