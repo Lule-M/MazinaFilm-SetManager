@@ -83,7 +83,7 @@ CREATE TABLE ZaposleniOprema
 	PRIMARY KEY (IDZaposleni, IDOprema),
 
 	CONSTRAINT FK_ZaposleniOprema_Zaposleni FOREIGN KEY (IDZaposleni)
-	REFERENCES Zaposleni(IDZaposleni),
+	REFERENCES Zaposleni(IDZaposleni) ON DELETE CASCADE,
 
 	CONSTRAINT FK_ZaposleniOprema_Oprema FOREIGN KEY (IDOprema)
 	REFERENCES Oprema(IDOprema)
@@ -101,7 +101,7 @@ CREATE TABLE ScenaZaposleni
 	REFERENCES Scena(IDSCena),
 
 	CONSTRAINT FK_ScenaZaposleni_Zaposleni FOREIGN KEY (IDZaposleni)
-	REFERENCES Zaposleni(IDZaposleni)
+	REFERENCES Zaposleni(IDZaposleni) ON DELETE CASCADE
 );
 GO
 
@@ -220,10 +220,13 @@ INSERT INTO ScenaZaposleni (IDScena, IDZaposleni) VALUES
 
 -- UPITI
 
--- 1. Pregled svih lokacija
+-- Pregled svih lokacija
 SELECT * FROM Lokacija;
 
--- 2. Prikaz svih scena sa nazivom lokacije i da li su snimljene
+-- Pregled svih zaposlenih
+SELECT * FROM Zaposleni;
+
+-- Prikaz svih scena sa nazivom lokacije i da li su snimljene
 SELECT 
     s.IDScena,
     s.RedniBroj,
@@ -234,16 +237,7 @@ SELECT
 FROM Scena s
 JOIN Lokacija l ON s.IDLokacija = l.IDLokacija;
 
--- 3. Koja oprema je dodeljena kom zaposlenom
-SELECT 
-    z.Ime + ' ' + z.Prezime AS Zaposleni,
-    o.NazivOpreme
-FROM ZaposleniOprema zo
-JOIN Zaposleni z ON zo.IDZaposleni = z.IDZaposleni
-JOIN Oprema o ON zo.IDOprema = o.IDOprema
-ORDER BY Zaposleni;
-
--- 4. Ko je radio na kojoj sceni
+-- Ko je radio na kojoj sceni
 SELECT 
     s.IDScena,
     s.RedniBroj,
@@ -253,38 +247,3 @@ FROM ScenaZaposleni sz
 JOIN Scena s ON sz.IDScena = s.IDScena
 JOIN Zaposleni z ON sz.IDZaposleni = z.IDZaposleni
 ORDER BY s.IDScena, z.Prezime;
-
--- 5. Scene koje su snimane po doba dana
-SELECT 
-    DobaDana,
-    COUNT(*) AS BrojScena
-FROM Scena
-GROUP BY DobaDana;
-
--- 6. Sve snimljene scene i njihovi zaposleni
-SELECT 
-    s.IDScena,
-    s.RedniBroj,
-    z.Ime + ' ' + z.Prezime AS Zaposleni
-FROM Scena s
-JOIN ScenaZaposleni sz ON s.IDScena = sz.IDScena
-JOIN Zaposleni z ON sz.IDZaposleni = z.IDZaposleni
-WHERE s.Snimljeno = 1
-ORDER BY s.IDScena;
-
--- 7. Broj zaposlenih po radnom mestu
-SELECT 
-    RadnoMesto,
-    COUNT(*) AS BrojZaposlenih
-FROM Zaposleni
-GROUP BY RadnoMesto
-ORDER BY BrojZaposlenih DESC;
-
--- 8. Koliko opreme koristi svaki zaposleni
-SELECT 
-    z.Ime + ' ' + z.Prezime AS Zaposleni,
-    COUNT(*) AS BrojOpreme
-FROM ZaposleniOprema zo
-JOIN Zaposleni z ON zo.IDZaposleni = z.IDZaposleni
-GROUP BY z.Ime, z.Prezime
-ORDER BY BrojOpreme DESC;
