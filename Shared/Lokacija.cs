@@ -10,5 +10,11 @@ namespace Shared
     {
         public int IdLokacija { get; set; }
         public string Naziv { get; set; } = string.Empty;
+
+        public override string ToString()
+        {
+            return $"{IdLokacija}-{Naziv}";
+        }
     }
+
 }

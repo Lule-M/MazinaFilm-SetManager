@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LokacijaRepository.cs" />
     <Compile Include="ScenaRepository.cs" />
     <Compile Include="ZaposleniRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

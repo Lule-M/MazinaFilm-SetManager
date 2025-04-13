@@ -22,17 +22,14 @@ namespace MazinaFilm_SetManager
 
             List<Scena> scene = ScenaService.Instance.GetAllScene();
 
-            foreach (Scena s in scene)
-            {
-                string red = $"{s.RedniBroj} | {s.DobaDana} | {s.DatumSnimanja.ToShortDateString()} | {s.Snimljeno}";
-                lbScene.Items.Add(red);
-            }
+            FillSceneListBox(scene);
 
             lbScene.SelectedIndex = 0;
 
-            cbLokacija.DataSource = LokacijaService.Instance.GetAllLokacije();
-            cbLokacija.ValueMember = "IdLokacija";
+            cbLokacija.ValueMember = "IDLokacija";
             cbLokacija.DisplayMember = "Naziv";
+            cbLokacija.DataSource = LokacijaService.Instance.GetAllLokacije();
+            cbLokacija.SelectedIndex = 0;
         }
 
         private void lbScene_SelectedIndexChanged(object sender, EventArgs e)
@@ -42,13 +39,30 @@ namespace MazinaFilm_SetManager
             dtpDatumSnimanja.Text = lbScene.SelectedItem.ToString().Split('|')[2].Trim();
             chkSnimljeno.Checked = bool.Parse(lbScene.SelectedItem.ToString().Split('|')[3].Trim());
 
-            cbLokacija.SelectedIndex = cbLokacija.FindStringExact(txtLokacija.Text);
-
             dgvZaposleni.DataSource = ScenaService.Instance.GetScena(int.Parse(txtRedniBroj.Text)).Zaposleni;
         }
 
         private void cbLokacija_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ComboBox cb = (ComboBox)sender;
+            if (cb.SelectedItem == null)
+                return;
+
+            lbScene.Items.Clear();
+
+            List<Scena> scene = ScenaService.Instance.GetAllScene((int)cbLokacija.SelectedValue);
+
+            FillSceneListBox(scene);
+            lbScene.SelectedIndex = 0;
+        }
+
+        private void FillSceneListBox(List<Scena> scene)
+        {
+            foreach (Scena s in scene)
+            {
+                string red = $"{s.RedniBroj} | {s.DobaDana} | {s.DatumSnimanja.ToShortDateString()} | {s.Snimljeno}";
+                lbScene.Items.Add(red);
+            }
 
         }
     }

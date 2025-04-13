@@ -98,6 +98,7 @@
             // 
             // cbLokacija
             // 
+            this.cbLokacija.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLokacija.FormattingEnabled = true;
             this.cbLokacija.Location = new System.Drawing.Point(87, 45);
             this.cbLokacija.Name = "cbLokacija";

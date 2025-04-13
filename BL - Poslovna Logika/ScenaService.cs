@@ -27,6 +27,11 @@ namespace BL___Poslovna_Logika
             return scenaRepo.GetAllScena();
         }
 
+        public List<Scena> GetAllScene(int idLokacija)
+        {
+            return scenaRepo.GetAllScena(idLokacija);
+        }
+
         public Scena GetScena(int id)
         {
             return scenaRepo.GetScena(id);

@@ -173,23 +173,20 @@ namespace DL___Sloj_Podataka
             return scenaList;
         }
 
-        public List<Scena> GetAllScena(int id)
+        public List<Scena> GetAllScena(int idLokacija)
         {
             List<Scena> scenaList = new List<Scena>();
 
             foreach (DataRow dr in dtScena.Rows)
             {
+                if (int.Parse(dr["IDLokacija"].ToString()) != idLokacija)
+                    continue;
+
                 Scena scena = new Scena();
 
                 scena = GetScena(int.Parse(dr["IDScena"].ToString()));
 
-                if (scena.IdScena == id)
-                {
-                    scena.Zaposleni = GetZaposleniNaSceni(scena.IdScena);
-                    scenaList.Add(scena);
-                }
-
-
+                scenaList.Add(scena);
             }
             return scenaList;
         }

@@ -73,10 +73,11 @@ namespace DL___Sloj_Podataka
                 Lokacija lokacija = new Lokacija();
 
                 lokacija.IdLokacija = Convert.ToInt32(dr["IdLokacija"]);
-                lokacija.Naziv = dr["Naziv"].ToString();
+                lokacija.Naziv = dr["NazivLokacije"].ToString();
                 lokacijaList.Add(lokacija);
             }
 
             return lokacijaList;
         }
+    }
 }
