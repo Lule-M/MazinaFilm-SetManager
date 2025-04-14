@@ -221,39 +221,11 @@ GO
 
 -- STORED PROCEDURE ZA UNOS
 
-CREATE PROCEDURE InsertZaposleniBasic
+CREATE PROCEDURE InsertZaposleni
     @Ime nvarchar(20),
     @Prezime nvarchar(20),
     @RadnoMesto nvarchar(50),
-    @IDZaposleni int OUTPUT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    
-    BEGIN TRY
-        BEGIN TRANSACTION;
-        
-        INSERT INTO Zaposleni (Ime, Prezime, RadnoMesto)
-        VALUES (@Ime, @Prezime, @RadnoMesto);
-        
-        SET @IDZaposleni = SCOPE_IDENTITY();
-        
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        IF @@TRANCOUNT > 0
-            ROLLBACK TRANSACTION;
-            
-        THROW;
-    END CATCH
-END;
-GO
-
-CREATE PROCEDURE InsertZaposleniSaScenom
-    @Ime nvarchar(20),
-    @Prezime nvarchar(20),
-    @RadnoMesto nvarchar(50),
-    @IDScena int,
+    @IDScena int = NULL,
     @IDZaposleni int OUTPUT
 AS
 BEGIN
