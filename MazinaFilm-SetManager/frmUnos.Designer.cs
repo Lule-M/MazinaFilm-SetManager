@@ -173,6 +173,8 @@
             this.Controls.Add(this.txtPrezime);
             this.Controls.Add(this.txtId);
             this.Controls.Add(this.txtIme);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "frmUnos";
             this.Text = "frmUnos";
             this.Load += new System.EventHandler(this.frmUnos_Load);

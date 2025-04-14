@@ -103,5 +103,10 @@ namespace MazinaFilm_SetManager
             ZaposleniService.Instance.DeleteZaposleni(selectedZaposleniId);
             UpdateDataGridView();
         }
+
+        private void btnXmlSerialization_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

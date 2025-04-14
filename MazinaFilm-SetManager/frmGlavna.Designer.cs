@@ -48,6 +48,7 @@
             this.btnObrisiZaposlenog = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.txtIdScene = new System.Windows.Forms.TextBox();
+            this.btnXmlSerialization = new System.Windows.Forms.Button();
             this.gbDetaljiScene.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZaposleni)).BeginInit();
             this.SuspendLayout();
@@ -94,7 +95,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(32, 64);
+            this.label7.Location = new System.Drawing.Point(32, 38);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(47, 13);
             this.label7.TabIndex = 18;
@@ -104,7 +105,7 @@
             // 
             this.cbLokacija.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLokacija.FormattingEnabled = true;
-            this.cbLokacija.Location = new System.Drawing.Point(85, 61);
+            this.cbLokacija.Location = new System.Drawing.Point(85, 35);
             this.cbLokacija.Name = "cbLokacija";
             this.cbLokacija.Size = new System.Drawing.Size(100, 21);
             this.cbLokacija.TabIndex = 17;
@@ -182,6 +183,7 @@
             // dgvZaposleni
             // 
             this.dgvZaposleni.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvZaposleni.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.dgvZaposleni.Location = new System.Drawing.Point(15, 251);
             this.dgvZaposleni.Name = "dgvZaposleni";
             this.dgvZaposleni.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -230,7 +232,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(61, 38);
+            this.label8.Location = new System.Drawing.Point(61, 65);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(18, 13);
             this.label8.TabIndex = 19;
@@ -238,17 +240,28 @@
             // 
             // txtIdScene
             // 
-            this.txtIdScene.Location = new System.Drawing.Point(85, 35);
+            this.txtIdScene.Location = new System.Drawing.Point(85, 62);
             this.txtIdScene.Name = "txtIdScene";
             this.txtIdScene.ReadOnly = true;
             this.txtIdScene.Size = new System.Drawing.Size(100, 20);
             this.txtIdScene.TabIndex = 20;
+            // 
+            // btnXmlSerialization
+            // 
+            this.btnXmlSerialization.Location = new System.Drawing.Point(334, 495);
+            this.btnXmlSerialization.Name = "btnXmlSerialization";
+            this.btnXmlSerialization.Size = new System.Drawing.Size(75, 23);
+            this.btnXmlSerialization.TabIndex = 8;
+            this.btnXmlSerialization.Text = "XML Export";
+            this.btnXmlSerialization.UseVisualStyleBackColor = true;
+            this.btnXmlSerialization.Click += new System.EventHandler(this.btnXmlSerialization_Click);
             // 
             // frmGlavna
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(507, 533);
+            this.Controls.Add(this.btnXmlSerialization);
             this.Controls.Add(this.btnObrisiZaposlenog);
             this.Controls.Add(this.btnIzmeniZaposlenog);
             this.Controls.Add(this.btnNoviZaposleni);
@@ -258,8 +271,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbScene);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "frmGlavna";
-            this.Text = "frmGlavna";
+            this.Text = "Mažina Film - Set Manager";
             this.gbDetaljiScene.ResumeLayout(false);
             this.gbDetaljiScene.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvZaposleni)).EndInit();
@@ -290,5 +304,6 @@
         private System.Windows.Forms.ComboBox cbLokacija;
         private System.Windows.Forms.TextBox txtIdScene;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnXmlSerialization;
     }
 }
