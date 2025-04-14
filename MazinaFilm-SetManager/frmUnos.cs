@@ -51,6 +51,24 @@ namespace MazinaFilm_SetManager
 
         private void btnSacuvaj_Click(object sender, EventArgs e)
         {
+            if (txtIme.Text == string.Empty)
+            {
+                MessageBox.Show("Unesite ime zaposlenog.", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (txtPrezime.Text == string.Empty)
+            {
+                MessageBox.Show("Unesite prezime zaposlenog.", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (txtRadnoMesto.Text == string.Empty)
+            {
+                MessageBox.Show("Unesite radno mesto zaposlenog.", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (idScene is null)
             {
                 ZaposleniService.Instance.InsertZaposleniIntoDb(
@@ -82,7 +100,6 @@ namespace MazinaFilm_SetManager
 
         private void btnPonisti_Click(object sender, EventArgs e)
         {
-            txtId.Text = string.Empty;
             txtIme.Text = string.Empty;
             txtPrezime.Text = string.Empty;
             txtRadnoMesto.Text = string.Empty;
