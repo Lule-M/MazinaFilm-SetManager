@@ -221,12 +221,11 @@ GO
 
 -- STORED PROCEDURE ZA UNOS
 
-CREATE PROCEDURE InsertZaposleni
+CREATE PROCEDURE ProcInsertZaposleni
     @Ime nvarchar(20),
     @Prezime nvarchar(20),
     @RadnoMesto nvarchar(50),
-    @IDScena int = NULL,
-    @IDZaposleni int OUTPUT
+    @IDScena int = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -237,6 +236,7 @@ BEGIN
         INSERT INTO Zaposleni (Ime, Prezime, RadnoMesto)
         VALUES (@Ime, @Prezime, @RadnoMesto);
         
+		DECLARE @IDZaposleni int;
         SET @IDZaposleni = SCOPE_IDENTITY();
         
         IF @IDScena IS NOT NULL
@@ -247,6 +247,43 @@ BEGIN
             INSERT INTO ScenaZaposleni (IDScena, IDZaposleni)
             VALUES (@IDScena, @IDZaposleni);
         END
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+            
+        THROW;
+    END CATCH
+END;
+GO
+
+-- STORED PROCEDURE ZA UPDATE
+
+CREATE PROCEDURE ProcUpdateZaposleni
+    @IDZaposleni int,
+    @Ime nvarchar(20) = NULL,
+    @Prezime nvarchar(20) = NULL,
+    @RadnoMesto nvarchar(50) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        IF NOT EXISTS (SELECT 1 FROM Zaposleni WHERE IDZaposleni = @IDZaposleni)
+        BEGIN
+            THROW 50002, 'Zaposleni sa navedenim ID ne postoji.', 1;
+        END
+        
+        UPDATE Zaposleni
+        SET 
+            Ime = ISNULL(@Ime, Ime),
+            Prezime = ISNULL(@Prezime, Prezime),
+            RadnoMesto = ISNULL(@RadnoMesto, RadnoMesto)
+        WHERE IDZaposleni = @IDZaposleni;
         
         COMMIT TRANSACTION;
     END TRY
