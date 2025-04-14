@@ -106,7 +106,14 @@ namespace MazinaFilm_SetManager
 
         private void btnXmlSerialization_Click(object sender, EventArgs e)
         {
-
+            if( XML_SerializeService.Instance.SerializeToXML())
+            {
+                MessageBox.Show("Uspešno serijalizovano u XML.", "Uspeh", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Greška prilikom serijalizacije u XML.", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

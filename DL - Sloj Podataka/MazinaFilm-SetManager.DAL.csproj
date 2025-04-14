@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="LokacijaRepository.cs" />
     <Compile Include="ScenaRepository.cs" />
+    <Compile Include="XML_SerializationRepository.cs" />
     <Compile Include="ZaposleniRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

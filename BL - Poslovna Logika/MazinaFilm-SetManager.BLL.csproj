@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="LokacijaService.cs" />
     <Compile Include="ScenaService.cs" />
+    <Compile Include="XML_SerializeService.cs" />
     <Compile Include="ZaposleniService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
