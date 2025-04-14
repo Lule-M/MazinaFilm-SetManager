@@ -77,7 +77,8 @@ namespace DL___Sloj_Podataka
 
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-                ds.WriteXml($"{desktopPath}_schema.xml", XmlWriteMode.WriteSchema);
+                ds.WriteXmlSchema($"{desktopPath}\\zaposleni-scena_schema.xsd");
+                ds.WriteXml($"{desktopPath}\\zaposleni-scena_data.xml");
                 return true;
             }
             catch (Exception ex)
