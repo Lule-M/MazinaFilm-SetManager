@@ -51,7 +51,7 @@ namespace DL___Sloj_Podataka
             sc.Close();
         }
 
-        public bool InsertIntoDb(string ime, string prezime, string randoMesto)
+        public bool InsertIntoDb(string ime, string prezime, string radnoMesto, int? idScena)
         {
             if (sc.State == ConnectionState.Closed)
             {
@@ -65,11 +65,12 @@ namespace DL___Sloj_Podataka
                     var cmd = sc.CreateCommand();
 
                     cmd.Transaction = tran;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "INSERT INTO Zaposleni (Ime, Prezime, RandoMesto) VALUES (@ime, @prezime, @randoMesto)";
-                    cmd.Parameters.AddWithValue("@ime", ime);
-                    cmd.Parameters.AddWithValue("@prezime", prezime);
-                    cmd.Parameters.AddWithValue("@randoMesto", randoMesto);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "ProcInsertZaposleni";
+                    cmd.Parameters.AddWithValue("@Ime", ime);
+                    cmd.Parameters.AddWithValue("@Prezime", prezime);
+                    cmd.Parameters.AddWithValue("@RadnoMesto", radnoMesto);
+                    cmd.Parameters.AddWithValue("@IDScena", idScena);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
 
@@ -80,6 +81,7 @@ namespace DL___Sloj_Podataka
                     }
 
                     tran.Commit();
+                    sc.Close();
                     LoadZaposleni();    
                     return true;
                 }
@@ -114,17 +116,51 @@ namespace DL___Sloj_Podataka
             LoadZaposleni();
         }
 
-        public bool Update(Zaposleni zaposleni)
+        public bool Update(int idZaposleni, string ime, string prezime, string radnoMesto)
         {
-            DataRow dr = dtZaposleni.Select("IDZaposleni =" + zaposleni.IDZaposleni.ToString())[0];
+            if (sc.State == ConnectionState.Closed)
+            {
+                sc.Open();
+            }
 
-            dr["IDZaposleni"] = zaposleni.IDZaposleni;
-            dr["Ime"] = zaposleni.Ime;
-            dr["Prezime"] = zaposleni.Prezime;
-            dr["RandoMesto"] = zaposleni.RadnoMesto;
+            using (SqlTransaction tran = sc.BeginTransaction())
+            {
+                try
+                {
+                    var cmd = sc.CreateCommand();
 
-            UpdateDb();
-            return true;
+                    cmd.Transaction = tran;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "ProcUpdateZaposleni";
+                    cmd.Parameters.AddWithValue("@IDZaposleni", idZaposleni);
+                    cmd.Parameters.AddWithValue("@Ime", ime);
+                    cmd.Parameters.AddWithValue("@Prezime", prezime);
+                    cmd.Parameters.AddWithValue("@RadnoMesto", radnoMesto);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected == 0)
+                    {
+                        tran.Rollback();
+                        return false;
+                    }
+
+                    tran.Commit();
+                    sc.Close();
+                    LoadZaposleni();
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    throw new Exception("Error inserting data: " + ex.Message); // Consider logging the exception or handling it appropriately in the UI
+                }
+                finally
+                {
+                    sc.Close();
+                }
+            }
         }
 
         public bool Delete(int id)
@@ -143,12 +179,12 @@ namespace DL___Sloj_Podataka
             zaposleni.IDZaposleni = Int32.Parse(dr["IDZaposleni"].ToString());
             zaposleni.Ime = dr["Ime"].ToString();
             zaposleni.Prezime = dr["Prezime"].ToString();
-            zaposleni.RadnoMesto = dr["RandoMesto"].ToString();
+            zaposleni.RadnoMesto = dr["RadnoMesto"].ToString();
 
             return zaposleni;
         }
 
-        public List<Zaposleni> GetAllZaposleni() // dodaj i getere sa atributima pretrage
+        public List<Zaposleni> GetAllZaposleni()
         {
             List<Zaposleni> zaposleniList = new List<Zaposleni>();
 
@@ -164,6 +200,11 @@ namespace DL___Sloj_Podataka
             }
 
             return zaposleniList;
+        }
+
+        public void InsertIntoDataTable(string ime, string prezime, string radnoMesto, int? idScena)
+        {
+            throw new NotImplementedException();
         }
     }
 }

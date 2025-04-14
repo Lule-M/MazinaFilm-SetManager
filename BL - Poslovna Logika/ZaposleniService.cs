@@ -32,15 +32,21 @@ namespace BL___Poslovna_Logika
             return zapRepo.GetZaposleni(id);
         }
 
-        public bool UpdateZaposleni(Zaposleni zaposleni)
+        public bool UpdateZaposleni(int idZaposleni, string ime, string prezime, string radnoMesto)
         {
-            zapRepo.Update(zaposleni);
+            zapRepo.Update(idZaposleni, ime, prezime, radnoMesto);
             return true;
         }
 
         public bool InsertZaposleni(Zaposleni zaposleni)
         {
             zapRepo.InsertIntoDataTable(zaposleni);
+            return true;
+        }
+
+        public bool InsertZaposleniIntoDb(string ime, string prezime, string radnoMesto, int? idScena)
+        {
+            zapRepo.InsertIntoDb(ime, prezime, radnoMesto, idScena);
             return true;
         }
 
